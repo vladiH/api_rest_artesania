@@ -1,0 +1,20 @@
+{
+  "name": "api_rest_artesania",
+  "version": "1.0.0",
+  "description": "arquitectura rest en nodeJS para artesanias sañus",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "yuri vladimir y washington blass",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "mongoose": "^4.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}
