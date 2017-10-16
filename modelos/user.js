@@ -5,11 +5,12 @@ var email_match=[/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,"email no valid
 var tipo_user=['super','user'];
 var userSchema=new Schema({
    nombre: {
-          first: { type: String, required: true, trim: true},
-          last: { type: String, required: true, trim: true}
+          first: { type: String, required: "Es necesario un nombre", trim: true},
+          last: { type: String, required: "Es necesario el apellido", trim: true}
     },
     userName:{
         type:String,
+        minlength:[1,'User name muy corto'],
         unique:true,
         require:"Es necesario un username",
     },
@@ -32,7 +33,7 @@ var userSchema=new Schema({
     require:"Es necesario un email",
     match:email_match
     },
-    tipo:{type:String, enum:{values:tipo_user,message:'opcion no valida'}, default:'user'}
+    tipo:{type:String, enum:{values:tipo_user,message:'Tipo no valido'}, default:'user'}
 })
 
 userSchema.virtual("password_confirmation").get(function(){

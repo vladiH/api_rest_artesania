@@ -10,6 +10,6 @@ var cabecera=require('./middleware/cabecera');
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(cabecera);
-app.use('/sañu',api)
+app.use('/sanu',api)
 
 module.exports= app;

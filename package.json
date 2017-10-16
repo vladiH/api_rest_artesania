@@ -4,16 +4,17 @@
   "description": "arquitectura rest en nodeJS para artesanias sañus",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "yuri vladimir y washington blass",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
-    "mongoose": "^4.12.1"
+    "mongoose": "^4.12.1",
+    "password-hash": "^1.2.2"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
