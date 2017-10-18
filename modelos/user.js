@@ -1,5 +1,6 @@
 'use strict'
 var mongoose=require("mongoose");
+var passwordHash = require ('password-hash');
 var Schema=mongoose.Schema;
 var email_match=[/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,"email no valido"];
 var tipo_user=['super','user'];
@@ -7,12 +8,6 @@ var userSchema=new Schema({
    nombre: {
           first: { type: String, required: "Es necesario un nombre", trim: true},
           last: { type: String, required: "Es necesario el apellido", trim: true}
-    },
-    userName:{
-        type:String,
-        minlength:[1,'User name muy corto'],
-        unique:true,
-        require:"Es necesario un username",
     },
     password:{
         type:String,
@@ -30,10 +25,14 @@ var userSchema=new Schema({
     },
     email:{
     type:String,
+    unique:true,
+    lowercase:true,
     require:"Es necesario un email",
     match:email_match
     },
     tipo:{type:String, enum:{values:tipo_user,message:'Tipo no valido'}, default:'user'}
+},{
+    timestamps:true
 })
 
 userSchema.virtual("password_confirmation").get(function(){
@@ -41,5 +40,24 @@ userSchema.virtual("password_confirmation").get(function(){
 }).set(function(password){
     this.p_c=password;
 })
+
+userSchema.pre('save',function(next){
+    var usuario=this;
+    if(!usuario.isModified('password')){
+        return next();
+    }else{
+        usuario.password=passwordHash.generate(usuario.password);
+        next();
+    }
+})
+
+userSchema.methods.compararPassword=function(password, callback){
+    var sonIguales=passwordHash.verify(password, this.password);
+    if(!sonIguales){
+        return callback();
+    }else{
+        callback(null,sonIguales);
+    }
+}
 
 module.exports = mongoose.model('user', userSchema);
